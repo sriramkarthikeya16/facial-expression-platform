@@ -23,6 +23,11 @@ if config.config_file_name is not None:
 # Override DATABASE_URL from environment if present
 import os
 database_url = os.getenv("DATABASE_URL", config.get_main_option("sqlalchemy.url"))
+if database_url:
+    if database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql+asyncpg://", 1)
+    elif database_url.startswith("postgresql://") and not database_url.startswith("postgresql+asyncpg://"):
+        database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 config.set_main_option("sqlalchemy.url", database_url)
 
 target_metadata = Base.metadata
