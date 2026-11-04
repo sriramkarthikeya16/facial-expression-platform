@@ -3,8 +3,9 @@
  */
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Activity, Lock, Mail, User, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Activity, Lock, Mail, User, ArrowRight, ShieldCheck, AlertTriangle } from 'lucide-react';
 import { authApi } from '../services/authApi';
+import { API_BASE_URL } from '../services/api';
 import { useAuthStore } from '../store/authStore';
 import toast from 'react-hot-toast';
 
@@ -14,6 +15,8 @@ export const RegisterPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [agreedToPrivacy, setAgreedToPrivacy] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  const isMissingApiUrl = !import.meta.env.VITE_API_BASE_URL;
 
   const setAuth = useAuthStore((s) => s.setAuth);
   const navigate = useNavigate();
@@ -32,18 +35,21 @@ export const RegisterPage: React.FC = () => {
       toast.success('Account created successfully!');
       navigate('/dashboard');
     } catch (err: any) {
+      console.error('Registration failed:', err);
       const detail = err.response?.data?.detail;
       let msg = 'Failed to create account';
       if (typeof detail === 'string') {
         msg = detail;
       } else if (Array.isArray(detail)) {
         msg = detail.map((d: any) => d.msg.replace(/^Value error,\s*/i, '')).join('; ');
-      } else if (err.message === 'Network Error') {
-        msg = 'Network Error: Cannot connect to backend. Please verify backend is active.';
+      } else if (!err.response) {
+        msg = `Network Error: Cannot connect to backend (${API_BASE_URL}). If using Render free tier, it may take ~45s to wake up, or Vercel env var is missing.`;
+      } else if (err.response?.status === 500) {
+        msg = 'Server Error (500): Database issue or server crash. Check Render backend logs.';
       } else if (err.message) {
         msg = err.message;
       }
-      toast.error(msg);
+      toast.error(msg, { duration: 6000 });
     } finally {
       setIsLoading(false);
     }
@@ -73,6 +79,18 @@ export const RegisterPage: React.FC = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-slate-900/90 py-8 px-6 sm:px-10 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
+          {isMissingApiUrl && (
+            <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-start space-x-2.5">
+              <AlertTriangle className="w-5 h-5 flex-shrink-0 text-amber-400 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-semibold text-amber-200">Backend URL Not Configured</p>
+                <p className="text-amber-300/80 leading-relaxed">
+                  The frontend is defaulting to <code className="bg-amber-950 px-1 py-0.5 rounded text-amber-200">http://localhost:8000</code>. On Vercel, add <code className="bg-amber-950 px-1 py-0.5 rounded text-amber-200">VITE_API_BASE_URL</code> in Project Settings &rarr; Environment Variables and redeploy.
+                </p>
+              </div>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">

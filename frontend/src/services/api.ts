@@ -4,7 +4,14 @@
 import axios from 'axios';
 import { useAuthStore } from '../store/authStore';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+
+if (!import.meta.env.VITE_API_BASE_URL) {
+  console.warn(
+    '[MoodLens] VITE_API_BASE_URL is not set! API calls default to http://localhost:8000. ' +
+    'If deployed on Vercel, add VITE_API_BASE_URL to Vercel Environment Variables and redeploy.'
+  );
+}
 
 export const apiClient = axios.create({
   baseURL: `${API_BASE_URL}/api/v1`,
