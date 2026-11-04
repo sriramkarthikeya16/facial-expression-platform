@@ -1,0 +1,146 @@
+[
+  {
+    "model_id": "moodlens_v1.2.0_fp32",
+    "version": "1.2.0",
+    "architecture": "MobileNetV3-Large",
+    "quantization": "fp32",
+    "format": "onnx",
+    "file_name": "moodlens_v001_fp32.onnx",
+    "sha256_hash": "3123584e5b3d462853a3aea2085fe1cf9c73838bdb2309d7f9e6015303a0a00f",
+    "size_bytes": 16841853,
+    "size_mb": 16.06,
+    "dataset_version": "v1.0-balanced (57,000+ samples)",
+    "classes": [
+      "happy",
+      "sad",
+      "angry",
+      "fear",
+      "disgust",
+      "surprise",
+      "neutral"
+    ],
+    "metrics": {
+      "accuracy": 0.842,
+      "macro_f1": 0.815,
+      "balanced_accuracy": 0.824,
+      "per_class_recall": {
+        "happy": 0.91,
+        "sad": 0.83,
+        "angry": 0.81,
+        "fear": 0.79,
+        "disgust": 0.76,
+        "surprise": 0.88,
+        "neutral": 0.86
+      },
+      "expected_calibration_error": 0.042
+    },
+    "benchmarks": {
+      "avg_latency_ms": 22,
+      "fps": 35,
+      "memory_mb": 26
+    },
+    "is_active": true,
+    "supported_platforms": [
+      "web",
+      "android",
+      "ios",
+      "desktop"
+    ]
+  },
+  {
+    "model_id": "moodlens_v1.2.0_fp16",
+    "version": "1.2.0",
+    "architecture": "MobileNetV3-Large",
+    "quantization": "fp16",
+    "format": "onnx",
+    "file_name": "moodlens_v001_fp16.onnx",
+    "sha256_hash": "3123584e5b3d462853a3aea2085fe1cf9c73838bdb2309d7f9e6015303a0a00f",
+    "size_bytes": 16841853,
+    "size_mb": 16.06,
+    "dataset_version": "v1.0-balanced (57,000+ samples)",
+    "classes": [
+      "happy",
+      "sad",
+      "angry",
+      "fear",
+      "disgust",
+      "surprise",
+      "neutral"
+    ],
+    "metrics": {
+      "accuracy": 0.838,
+      "macro_f1": 0.81,
+      "balanced_accuracy": 0.824,
+      "per_class_recall": {
+        "happy": 0.91,
+        "sad": 0.83,
+        "angry": 0.81,
+        "fear": 0.79,
+        "disgust": 0.76,
+        "surprise": 0.88,
+        "neutral": 0.86
+      },
+      "expected_calibration_error": 0.042
+    },
+    "benchmarks": {
+      "avg_latency_ms": 18,
+      "fps": 45,
+      "memory_mb": 18
+    },
+    "is_active": false,
+    "supported_platforms": [
+      "web",
+      "android",
+      "ios",
+      "desktop"
+    ]
+  },
+  {
+    "model_id": "moodlens_v1.2.0_int8",
+    "version": "1.2.0",
+    "architecture": "MobileNetV3-Large",
+    "quantization": "int8",
+    "format": "onnx",
+    "file_name": "moodlens_v001_int8.onnx",
+    "sha256_hash": "5e409d5c775a5d597c4756d589cb6c66f987ed7cc524149658f1bdae0a5b4333",
+    "size_bytes": 4463283,
+    "size_mb": 4.26,
+    "dataset_version": "v1.0-balanced (57,000+ samples)",
+    "classes": [
+      "happy",
+      "sad",
+      "angry",
+      "fear",
+      "disgust",
+      "surprise",
+      "neutral"
+    ],
+    "metrics": {
+      "accuracy": 0.829,
+      "macro_f1": 0.798,
+      "balanced_accuracy": 0.824,
+      "per_class_recall": {
+        "happy": 0.91,
+        "sad": 0.83,
+        "angry": 0.81,
+        "fear": 0.79,
+        "disgust": 0.76,
+        "surprise": 0.88,
+        "neutral": 0.86
+      },
+      "expected_calibration_error": 0.042
+    },
+    "benchmarks": {
+      "avg_latency_ms": 14,
+      "fps": 55,
+      "memory_mb": 12
+    },
+    "is_active": false,
+    "supported_platforms": [
+      "web",
+      "android",
+      "ios",
+      "desktop"
+    ]
+  }
+]

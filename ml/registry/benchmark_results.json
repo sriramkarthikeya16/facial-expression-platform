@@ -1,0 +1,29 @@
+{
+  "moodlens_v001_fp32": {
+    "model_file": "moodlens_v001_fp32.onnx",
+    "avg_latency_ms": 3.42,
+    "p50_latency_ms": 3.33,
+    "p95_latency_ms": 4.34,
+    "p99_latency_ms": 4.62,
+    "fps": 292.4,
+    "iterations": 100
+  },
+  "moodlens_v001_fp16": {
+    "model_file": "moodlens_v001_fp16.onnx",
+    "avg_latency_ms": 3.54,
+    "p50_latency_ms": 3.34,
+    "p95_latency_ms": 4.57,
+    "p99_latency_ms": 4.63,
+    "fps": 282.8,
+    "iterations": 100
+  },
+  "moodlens_v001_int8": {
+    "model_file": "moodlens_v001_int8.onnx",
+    "avg_latency_ms": 5.9,
+    "p50_latency_ms": 5.57,
+    "p95_latency_ms": 7.53,
+    "p99_latency_ms": 7.8,
+    "fps": 169.4,
+    "iterations": 100
+  }
+}
