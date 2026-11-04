@@ -32,7 +32,18 @@ export const RegisterPage: React.FC = () => {
       toast.success('Account created successfully!');
       navigate('/dashboard');
     } catch (err: any) {
-      toast.error(err.response?.data?.detail || 'Failed to create account');
+      const detail = err.response?.data?.detail;
+      let msg = 'Failed to create account';
+      if (typeof detail === 'string') {
+        msg = detail;
+      } else if (Array.isArray(detail)) {
+        msg = detail.map((d: any) => d.msg.replace(/^Value error,\s*/i, '')).join('; ');
+      } else if (err.message === 'Network Error') {
+        msg = 'Network Error: Cannot connect to backend. Please verify backend is active.';
+      } else if (err.message) {
+        msg = err.message;
+      }
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
