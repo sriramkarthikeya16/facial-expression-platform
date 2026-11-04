@@ -65,10 +65,17 @@ def create_application() -> FastAPI:
     app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
     # ── CORS ─────────────────────────────────────────────────────────
+    # Wildcard '*' in allow_origins breaks browsers when allow_credentials=True.
+    # If wildcard is detected or for any Vercel domain, use origin_regex to mirror the exact origin.
+    raw_origins = [o.strip() for o in settings.cors_origins_list if o.strip()]
+    has_wildcard = "*" in raw_origins
+    clean_origins = [o for o in raw_origins if o != "*"]
+    origin_regex = r".*" if has_wildcard else r"https://.*\.vercel\.app"
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.cors_origins_list,
-        allow_origin_regex=r"https://.*\.vercel\.app",
+        allow_origins=clean_origins,
+        allow_origin_regex=origin_regex,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
